@@ -1,6 +1,16 @@
 <template>
-  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <AltasBajas></AltasBajas>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+
+  <body class="body">
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <div>
+      <AltasBajas></AltasBajas>
+    </div>
+  </body>
+
 </template>
 
 <script>
@@ -22,6 +32,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background-color: #363636;
+}
+
+/* Establecer un color de fondo */
+body {
+  background-color: #363636;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 </style>
