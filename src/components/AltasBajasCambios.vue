@@ -37,7 +37,7 @@
                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModaledit"  @click="llenar(index)">
                             Editar
                         </button>
-                        <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#myModal"
+                        <button type="button" class="btn btn-danger ml-2" data-toggle="modal" 
                         @click="DeleteProducto(producto.id)">
                             Eliminar
                         </button>
@@ -148,8 +148,19 @@ export default {
             this.newProducto.Nombre = "";
             this.newProducto.Descripcion = "";
         },
-        DeleteProducto() {
+        DeleteProducto(productId) {
+            // Buscar en el arreglo
+            const index = this.Productos.findIndex(producto => producto.id === productId);
 
+            // Si se encontró el producto, mostrar un mensaje
+            if (index !== -1) {
+                const confirmacion = window.confirm("¿Seguro deseas eliminar este producto?");
+
+                if (confirmacion) {
+                    // Si el usuario confirma, eliminar el producto del arreglo
+                    this.Productos.splice(index, 1);
+                }
+            }
         },
         UupdateProducto( ) {
             const prodact={
