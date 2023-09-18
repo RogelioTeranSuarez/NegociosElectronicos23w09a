@@ -27,7 +27,7 @@
                     <th class="TXWc" scope="col">Acciones</th>
                 </tr>
             </thead>
-            <tbody class="TXWc">
+            <tbody class="TB">
                 <tr v-for="(producto, index) in Productos" :key="index">
                     <td>{{ producto.id }}</td>
                     <td>{{ producto.nombre }}</td>
@@ -37,8 +37,8 @@
                             @click="llenar(index)">
                             Editar
                         </button>
-                        <button type="button" class="btn btn-danger ml-2" data-toggle="modal" 
-                        @click="DeleteProducto(producto.id)">
+                        <button type="button" class="btn btn-danger ml-2" data-toggle="modal"
+                            @click="DeleteProducto(producto.id)">
                             Eliminar
                         </button>
                     </td>
@@ -117,8 +117,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
     <!-- Mensaje de error cuando hay id duplicado, solo se muestra si no está vacío -->
     <div v-if="mensajeError" class="alert alert-danger mt-3">
         {{ mensajeError }}
@@ -137,13 +137,12 @@ export default {
             ide: -1,
             ide2: 0,
             x: ref(0),
-            mensajeError: '' // Mensaje cuando existe id duplicado
+            mensajeError: ''
         };
     },
     methods: {
         //añadir un producto
         AddProducto() {
-
             if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
 
                 const nuevoProducto = {
@@ -157,12 +156,21 @@ export default {
 
                 if (productoExiste === -1) {           //Si no existe se agrega el producto
                     this.Productos.push(nuevoProducto);
-                    this.arregloOrdenado;
 
-            //se limpian los campos
-            this.newProducto.Id = "";
-            this.newProducto.Nombre = "";
-            this.newProducto.Descripcion = "";
+                    //this.arregloOrdenado;
+
+                    //se limpian los campos
+                    this.newProducto.Id = "";
+                    this.newProducto.Nombre = "";
+                    this.newProducto.Descripcion = "";
+                    this.mensajeError = '';
+                } else {        //Si existe se muestra el mensaje
+                    this.mensajeError = "Un producto con este id ya existe";
+                }
+
+            } else {
+                this.mensajeError = "Ningún campo puede estár vacío";
+            }
         },
         DeleteProducto(productId) {
             // Buscar en el arreglo
@@ -179,7 +187,6 @@ export default {
             }
         },
         UupdateProducto() {
-
             if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
                 const prodact = {
                     id: this.newProducto.Id,
@@ -192,7 +199,8 @@ export default {
 
                 if (productoExiste === -1) {           //Si no existe se agrega el producto
                     this.Productos[this.ide2] = prodact;
-                    this.arregloOrdenado;
+
+                   // this.arregloOrdenado;
 
                     //se limpian los campos
                     this.newProducto.Id = "";
@@ -205,8 +213,6 @@ export default {
             }else{
                 this.mensajeError = "Ningún campo puede estar vacío";
             }
-
-
         },
         llenar(ide) {
             this.ide2 = ide;
@@ -220,13 +226,8 @@ export default {
             this.x = e.clientX;
         }
 
-    },
-    computed:{
-        arregloOrdenado(){
-            return this.Productos.sort((a,b) => a.id > b.id ? 1: -1);
-        }
     }
-
+    
 }
 </script>
   
@@ -314,6 +315,5 @@ export default {
 input::placeholder {
     color: hsl(0, 0%, 100%);
     font-size: 12px;
-}
-</style>
+}</style>
   
