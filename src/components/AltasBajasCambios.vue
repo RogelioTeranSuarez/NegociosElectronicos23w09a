@@ -1,14 +1,13 @@
 <template>
-<header class="header"></header>
+    <header class="header"></header>
 
-        <div @mousemove="onMousemoveA"
-        :class="{ 'gray-bg': x < 5, 'blue-bg': x >= 5 }"
-  class="BGAN gray-bg" style="border-top: 5px solid #666666;border-bottom: 5px solid #666666">
+    <div @mousemove="onMousemoveA" :class="{ 'gray-bg': x < 5, 'blue-bg': x >= 5 }" class="BGAN gray-bg"
+        style="border-top: 5px solid #666666;border-bottom: 5px solid #666666">
 
-    <h1 :class="{'hiddenA-text': x < 5, 'visible-text': x >= 5}">Productos ACME</h1>
-    <p :class="{'hiddenA-text': x < 5, 'hiddenB-text': x >= 5}">.</p>
+        <h1 :class="{ 'hiddenA-text': x < 5, 'visible-text': x >= 5 }">Productos ACME</h1>
+        <p :class="{ 'hiddenA-text': x < 5, 'hiddenB-text': x >= 5 }">.</p>
 
-</div>
+    </div>
 
 
 
@@ -28,17 +27,18 @@
                     <th class="TXWc" scope="col">Acciones</th>
                 </tr>
             </thead>
-            <tbody class="TB">
+            <tbody class="TXWc">
                 <tr v-for="(producto, index) in Productos" :key="index">
                     <td>{{ producto.id }}</td>
                     <td>{{ producto.nombre }}</td>
                     <td>{{ producto.Desc }}</td>
                     <td class="">
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModaledit"  @click="llenar(index)">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModaledit"
+                            @click="llenar(index)">
                             Editar
                         </button>
                         <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#myModal"
-                        @click="DeleteProducto(producto.id)">
+                            @click="DeleteProducto(producto.id)">
                             Eliminar
                         </button>
                     </td>
@@ -50,7 +50,7 @@
     <!-- ventana modal -->
 
     <!-- Esta es tu ventana modal -->
-    <div class="modal fade BGTf" id="myModal" >
+    <div class="modal fade BGTf" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content BGTo">
                 <div class="modal-header">
@@ -60,7 +60,8 @@
                 <div class="modal-body">
                     <!-- id -->
                     <div class="input-group input-group-sm mb-3">
-                        <input type="Number" class="form-control BGTl TXWl" placeholder="ID del producto" v-model="newProducto.Id">
+                        <input type="Number" class="form-control BGTl TXWl" placeholder="ID del producto"
+                            v-model="newProducto.Id">
                     </div>
 
                     <!-- Nombre-->
@@ -94,7 +95,8 @@
                 <div class="modal-body">
                     <!-- id -->
                     <div class="input-group input-group-sm mb-3">
-                        <input id = "idedit" type="Number" class="form-control BGTl TXWl" placeholder="ID del producto" v-model="newProducto.Id">
+                        <input id="idedit" type="Number" class="form-control BGTl TXWl" placeholder="ID del producto"
+                            v-model="newProducto.Id">
                     </div>
 
                     <!-- Nombre-->
@@ -116,6 +118,11 @@
             </div>
         </div>
     </div>
+
+    <!-- Mensaje de error cuando hay id duplicado, solo se muestra si no está vacío -->
+    <div v-if="mensajeError" class="alert alert-danger mt-3">
+        {{ mensajeError }}
+    </div>
 </template>
   
 <script>
@@ -126,60 +133,100 @@ export default {
         return {
             Productos: [],
             newProducto: { id: "", nombre: '', Descripcion: "" },
-            UpdatePorducto: {id:""},
+            UpdatePorducto: { id: "" },
             ide: -1,
             ide2: 0,
-            x: ref(0)            
+            x: ref(0),
+            mensajeError: '' // Mensaje cuando existe id duplicado
         };
     },
     methods: {
         //añadir un producto
         AddProducto() {
-            const nuevoProducto = {
-                id: this.newProducto.Id,
-                nombre: this.newProducto.Nombre,
-                Desc: this.newProducto.Descripcion
-            };
 
-            this.Productos.push(nuevoProducto);
+            if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
 
-            //se limpian los campos
-            this.newProducto.Id = "";
-            this.newProducto.Nombre = "";
-            this.newProducto.Descripcion = "";
+                const nuevoProducto = {
+                    id: this.newProducto.Id,
+                    nombre: this.newProducto.Nombre,
+                    Desc: this.newProducto.Descripcion
+                };
+
+                const newProductId = this.newProducto.Id;
+                const productoExiste = this.Productos.findIndex(product => product.id === newProductId); // Se busca si el Id existe
+
+                if (productoExiste === -1) {           //Si no existe se agrega el producto
+                    this.Productos.push(nuevoProducto);
+                    this.arregloOrdenado;
+
+                    //se limpian los campos
+                    this.newProducto.Id = "";
+                    this.newProducto.Nombre = "";
+                    this.newProducto.Descripcion = "";
+                    this.mensajeError = '';
+                } else {        //Si existe se muestra el mensaje
+                    this.mensajeError = "Un producto con este id ya existe";
+                }
+
+            } else {
+                this.mensajeError = "Ningún campo puede estár vacío";
+            }
+
+
+
         },
         DeleteProducto() {
 
         },
-        UupdateProducto( ) {
-            const prodact={
-                id: this.newProducto.Id,
-                nombre: this.newProducto.Nombre,
-                Desc: this.newProducto.Descripcion
+        UupdateProducto() {
+
+            if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
+                const prodact = {
+                    id: this.newProducto.Id,
+                    nombre: this.newProducto.Nombre,
+                    Desc: this.newProducto.Descripcion
+                }
+
+                const newProductId = this.newProducto.Id;
+                const productoExiste = this.Productos.findIndex(product => product.id === newProductId); // Se busca si el Id existe
+
+                if (productoExiste === -1) {           //Si no existe se agrega el producto
+                    this.Productos[this.ide2] = prodact;
+                    this.arregloOrdenado;
+
+                    //se limpian los campos
+                    this.newProducto.Id = "";
+                    this.newProducto.Nombre = "";
+                    this.newProducto.Descripcion = "";
+                    this.mensajeError = '';
+                } else {        //Si existe se muestra el mensaje
+                    this.mensajeError = "Un producto con este id ya existe";
+                }
+            }else{
+                this.mensajeError = "Ningún campo puede estar vacío";
             }
-            
-            this.Productos[this.ide2]= prodact;
-            
-            
-            this.newProducto.Id = "";
-            this.newProducto.Nombre = "";
-            this.newProducto.Descripcion = "";
-            
+
 
         },
-        llenar(ide){
+        llenar(ide) {
             this.ide2 = ide;
             var prod = this.Productos[ide];
             this.newProducto.Id = prod.id;
             this.newProducto.Nombre = prod.nombre;
             this.newProducto.Descripcion = prod.Desc;
 
-        },        
+        },
         onMousemoveA(e) {
             this.x = e.clientX;
         }
-        
+
+    },
+    computed:{
+        arregloOrdenado(){
+            return this.Productos.sort((a,b) => a.id > b.id ? 1: -1);
+        }
     }
+
 }
 </script>
   
@@ -188,78 +235,85 @@ export default {
 .BGAN:hover {
     transition: 5s background-color ease;
 }
-.gray-bg, .blue-bg {
-  background-color: hsl(0, 0%, 35%);
-  background-image: url(~@/assets/BGIm01.jpg);
-  background-size:cover;
-  background-position:0cm;  
-  transition: background-color 5s ease;
-}
+
+.gray-bg,
 .blue-bg {
-  background-color: hsla(209, 100%, 50%, 0.575);  
+    background-color: hsl(0, 0%, 35%);
+    background-image: url(~@/assets/BGIm01.jpg);
+    background-size: cover;
+    background-position: 0cm;
+    transition: background-color 5s ease;
+}
+
+.blue-bg {
+    background-color: hsla(209, 100%, 50%, 0.575);
 
 }
 
 .hiddenA-text {
-  color: hsla(0, 0%, 0%, 0);
-  text-align:center;
-  font-weight: bold;
-  font-size: 10px;
-  transition: color 2s ease,font-size 5s ease; /* Transición suave de la opacidad */  
+    color: hsla(0, 0%, 0%, 0);
+    text-align: center;
+    font-weight: bold;
+    font-size: 10px;
+    transition: color 2s ease, font-size 5s ease;
+    /* Transición suave de la opacidad */
 }
+
 .hiddenB-text {
-  color: hsla(0, 0%, 0%, 0);
-  text-align:right;
-  font-size: 100px;
-  transition: color 2s ease,font-size 5s ease; /* Transición suave de la opacidad */  
+    color: hsla(0, 0%, 0%, 0);
+    text-align: right;
+    font-size: 100px;
+    transition: color 2s ease, font-size 5s ease;
+    /* Transición suave de la opacidad */
 }
 
-.visible-text{
+.visible-text {
     color: hsl(0, 0%, 100%);
     font-weight: bold;
-    font-size:35px;
-    transition: color 5s ease,font-size 5s ease;    
-    text-align:center;
-}
-
-.header {
-  margin-top: 0;
-  padding-top: 0;
-}
-
-.TXWc{
-    color: hsl(0, 0%, 100%);
-    font-weight: bold;
-    font-size:12px;
-}
-
-.TXWl{
-    color: hsl(0, 0%, 100%);    
-    font-size:12px;
-}
-
-.TB{
-    Background-color: #363636;
-    color: hsl(0, 0%, 100%);
-    font-weight: bold;
-    font-size:10px;
+    font-size: 35px;
+    transition: color 5s ease, font-size 5s ease;
     text-align: center;
 }
 
-.BGTf{
+.header {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.TXWc {
+    color: hsl(0, 0%, 100%);
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.TXWl {
+    color: hsl(0, 0%, 100%);
+    font-size: 12px;
+}
+
+.TB {
+    Background-color: #363636;
+    color: hsl(0, 0%, 100%);
+    font-weight: bold;
+    font-size: 10px;
+    text-align: center;
+}
+
+.BGTf {
     Background-color: #36363686;
 }
 
-.BGTo{
+.BGTo {
     Background-color: #363636;
 }
 
-.BGTl{
+.BGTl {
     Background-color: #464646;
 }
-input::placeholder{
-    color: hsl(0, 0%, 100%);    
-    font-size:12px;
+
+input::placeholder {
+    color: hsl(0, 0%, 100%);
+    font-size: 12px;
 }
 </style>
   
