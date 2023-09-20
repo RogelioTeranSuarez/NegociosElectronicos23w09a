@@ -27,7 +27,7 @@
                     <th class="TXWc" scope="col">Acciones</th>
                 </tr>
             </thead>
-            <tbody class="TB">
+            <tbody class="TXWc">
                 <tr v-for="(producto, index) in Productos" :key="index">
                     <td>{{ producto.id }}</td>
                     <td>{{ producto.nombre }}</td>
@@ -157,7 +157,7 @@ export default {
                 if (productoExiste === -1) {           //Si no existe se agrega el producto
                     this.Productos.push(nuevoProducto);
 
-                    //this.arregloOrdenado;
+                    // this.ordenarProductos;
 
                     //se limpian los campos
                     this.newProducto.Id = "";
@@ -197,10 +197,10 @@ export default {
                 const newProductId = this.newProducto.Id;
                 const productoExiste = this.Productos.findIndex(product => product.id === newProductId); // Se busca si el Id existe
 
-                if (productoExiste === -1) {           //Si no existe se agrega el producto
+                if (productoExiste === -1 || newProductId==this.Productos[this.ide2].id) {           //Si no existe se agrega el producto
                     this.Productos[this.ide2] = prodact;
 
-                   // this.arregloOrdenado;
+                    // this.ordenarProductos;
 
                     //se limpian los campos
                     this.newProducto.Id = "";
@@ -214,6 +214,7 @@ export default {
                 this.mensajeError = "Ningún campo puede estar vacío";
             }
         },
+        
         llenar(ide) {
             this.ide2 = ide;
             var prod = this.Productos[ide];
@@ -225,9 +226,7 @@ export default {
         onMousemoveA(e) {
             this.x = e.clientX;
         }
-
     }
-    
 }
 </script>
   
