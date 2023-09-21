@@ -59,10 +59,10 @@
                 </div>
                 <div class="modal-body">
                     <!-- id -->
-                    <div class="input-group input-group-sm mb-3">
+                    <!-- <div class="input-group input-group-sm mb-3">
                         <input type="Number" class="form-control BGTl TXWl" placeholder="ID del producto"
                             v-model="newProducto.Id">
-                    </div>
+                    </div> -->
 
                     <!-- Nombre-->
                     <div class="input-group input-group-sm mb-3">
@@ -143,33 +143,42 @@ export default {
     methods: {
         //añadir un producto
         AddProducto() {
-            if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
+            //primero se verifica si Productos esta vacio. 
+            if(this.Productos.length === 0){
+                if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
 
-                const nuevoProducto = {
-                    id: this.newProducto.Id,
+                    const nuevoProducto = {
+                    id: 1,
                     nombre: this.newProducto.Nombre,
                     Desc: this.newProducto.Descripcion
+                    
                 };
 
-                const newProductId = this.newProducto.Id;
-                const productoExiste = this.Productos.findIndex(product => product.id === newProductId); // Se busca si el Id existe
-
-                if (productoExiste === -1) {           //Si no existe se agrega el producto
-                    this.Productos.push(nuevoProducto);
-
-                    // this.ordenarProductos;
-
-                    //se limpian los campos
-                    this.newProducto.Id = "";
-                    this.newProducto.Nombre = "";
-                    this.newProducto.Descripcion = "";
-                    this.mensajeError = '';
-                } else {        //Si existe se muestra el mensaje
-                    this.mensajeError = "Un producto con este id ya existe";
+                this.Productos.push(nuevoProducto);
+                this.newProducto.Nombre = "";
+                this.newProducto.Descripcion = "";
+                }else{
+                    this.mensajeError = "Ningún campo puede estár vacío";
                 }
+            }else{
+                let arr = this.Productos[this.Productos.length -1];
+                let lastID = arr.id+1; 
 
-            } else {
-                this.mensajeError = "Ningún campo puede estár vacío";
+                if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
+                    const nuevoProducto = {
+                    id: lastID,
+                    nombre: this.newProducto.Nombre,
+                    Desc: this.newProducto.Descripcion
+                    
+                };
+
+                this.Productos.push(nuevoProducto);
+
+                this.newProducto.Nombre = "";
+                this.newProducto.Descripcion = "";
+                }else{
+                    this.mensajeError = "Ningún campo puede estár vacío";
+                }
             }
         },
         DeleteProducto(productId) {
