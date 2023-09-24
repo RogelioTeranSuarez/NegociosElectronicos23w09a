@@ -89,15 +89,17 @@
         <div class="modal-dialog">
             <div class="modal-content BGTo">
                 <div class="modal-header">
-                    <h5 class="modal-title TXWc">Editando un Producto </h5>
+                    <h5 class="modal-title TXWc">Editando un Producto d</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <!-- id -->
+                    <!--
                     <div class="input-group input-group-sm mb-3">
-                        <input id="idedit" type="Number" class="form-control BGTl TXWl" placeholder="ID del producto"
+                        <input id="idedit" type="Number" class="form-control BGTl TXWl" placeholder="ID del producto"  
                             v-model="newProducto.Id">
                     </div>
+                    -->
 
                     <!-- Nombre-->
                     <div class="input-group input-group-sm mb-3">
@@ -158,26 +160,31 @@ export default {
                 this.newProducto.Nombre = "";
                 this.newProducto.Descripcion = "";
                 }else{
-                    this.mensajeError = "Ningún campo puede estár vacío";
+                    this.mensajeError = "Ningún campo puede estár vacío ";
+                    
                 }
+                
             }else{
                 let arr = this.Productos[this.Productos.length -1];
+                console.log('arr',arr);
                 let lastID = arr.id+1; 
+                console.log(this.newProducto, 'nuevo', this.newProducto.id);
 
-                if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
+                if ( this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
                     const nuevoProducto = {
                     id: lastID,
                     nombre: this.newProducto.Nombre,
                     Desc: this.newProducto.Descripcion
                     
                 };
-
+                console.log(nuevoProducto);
                 this.Productos.push(nuevoProducto);
 
                 this.newProducto.Nombre = "";
                 this.newProducto.Descripcion = "";
                 }else{
                     this.mensajeError = "Ningún campo puede estár vacío";
+                    console.log('ll0', this.newProducto.id, this.newProducto.Nombre, this.newProducto.Descripcion);
                 }
             }
         },
