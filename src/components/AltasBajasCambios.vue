@@ -147,7 +147,7 @@ export default {
         AddProducto() {
             //primero se verifica si Productos esta vacio. 
             if(this.Productos.length === 0){
-                if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
+                if ( this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
 
                     const nuevoProducto = {
                     id: 1,
