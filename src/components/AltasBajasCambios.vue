@@ -4,7 +4,7 @@
     <div @mousemove="onMousemoveA" :class="{ 'gray-bg': x < 5, 'blue-bg': x >= 5 }" class="BGAN gray-bg"
         style="border-top: 5px solid #666666;border-bottom: 5px solid #666666">
 
-        <h1 :class="{ 'hiddenA-text': x < 5, 'visible-text': x >= 5 }">Productos ACME</h1>
+        <h1 :class="{ 'hiddenA-text': x < 5, 'visible-text': x >= 5 }">Caja Plantas Huerticas</h1>
         <p :class="{ 'hiddenA-text': x < 5, 'hiddenB-text': x >= 5 }">.</p>
 
     </div>
@@ -188,7 +188,7 @@ export default {
                 }
             }
         },
-        DeleteProducto(productId) {
+        DeleteProducto(productId) {  
             // Buscar en el arreglo
             const index = this.Productos.findIndex(producto => producto.id === productId);
 
@@ -196,13 +196,13 @@ export default {
             if (index !== -1) {
                 const confirmacion = window.confirm("¿Seguro deseas eliminar este producto?");
 
-                if (confirmacion) {
-                    // Si el usuario confirma, eliminar el producto del arreglo
-                    this.Productos.splice(index, 1);
-                }
-            }
+                if (confirmacion) { 
+                    // Si el usuario confirma, eliminar el producto del arreglo 
+                    this.Productos.splice(index, 1);   
+                } 
+            } 
         },
-        UupdateProducto() {
+        UupdateProducto() { 
             if (this.newProducto.Id != '' && this.newProducto.Nombre != '' && this.newProducto.Descripcion != '') {
                 const prodact = {
                     id: this.newProducto.Id,
