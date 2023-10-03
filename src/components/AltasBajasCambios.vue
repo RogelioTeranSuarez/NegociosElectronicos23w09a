@@ -13,7 +13,7 @@
 
     <div class="container" style="Background-color: #363636;">
         <div class="d-flex justify-content-start mt-5">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            <button type="button" class="BotonP BotonAgregar TxtBlancoB" data-toggle="modal" data-target="#myModal">
                 Nuevo producto
             </button>
         </div>
@@ -21,23 +21,23 @@
         <table class="table mt-5">
             <thead>
                 <tr>
-                    <th class="TXWc" scope="col">ID</th>
-                    <th class="TXWc" scope="col">Nombre</th>
-                    <th class="TXWc" scope="col">Descripcion</th>
-                    <th class="TXWc" scope="col">Acciones</th>
+                    <th class="TxtBlancoB" scope="col">ID</th>
+                    <th class="TxtBlancoB" scope="col">Nombre</th>
+                    <th class="TxtBlancoB" scope="col">Descripcion</th>
+                    <th class="TxtBlancoB" scope="col">Acciones</th>                    
                 </tr>
             </thead>
-            <tbody class="TXWc">
+            <tbody class="TxtBlancoB">
                 <tr v-for="(producto, index) in Productos" :key="index">
                     <td>{{ producto.id }}</td>
                     <td>{{ producto.nombre }}</td>
                     <td>{{ producto.Desc }}</td>
                     <td class="">
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModaledit"
+                        <button type="button" class="BotonP BotonAviso TxtBlancoB" data-toggle="modal" data-target="#myModaledit"
                             @click="llenar(index)">
                             Editar
                         </button>
-                        <button type="button" class="btn btn-danger ml-2" data-toggle="modal"
+                        <button type="button" class="BotonP BotonEliminar TxtBlancoB" data-toggle="modal"
                             @click="DeleteProducto(producto.id)">
                             Eliminar
                         </button>
@@ -50,11 +50,11 @@
     <!-- ventana modal -->
 
     <!-- Esta es tu ventana modal -->
-    <div class="modal fade BGTf" id="myModal">
+    <div class="modal fade BGVtnModalFade" id="myModal">
         <div class="modal-dialog">
-            <div class="modal-content BGTo">
+            <div class="modal-content BGVtnModalPrincipal">
                 <div class="modal-header">
-                    <h5 class="modal-title TXWc">Agrega un Producto</h5>
+                    <h5 class="modal-title TxtBlancoB">Agrega un Producto</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -66,18 +66,18 @@
 
                     <!-- Nombre-->
                     <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control BGTl TXWl" placeholder="Nombre del producto"
+                        <input type="text" class="form-control BGTextHolder TxtBlancoN" placeholder="Nombre del producto"
                             v-model="newProducto.Nombre">
                     </div>
 
                     <!-- Descripcion -->
                     <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control BGTl TXWl" placeholder="Descripcion del producto"
+                        <input type="text" class="form-control BGTextHolder TxtBlancoN" placeholder="Descripcion del producto"
                             v-model="newProducto.Descripcion">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" @click="AddProducto()">Guardar
+                    <button type="button" class="BotonP BotonConfirmacion TxtBlancoB" data-dismiss="modal" @click="AddProducto()">Guardar
                         datos</button>
                 </div>
             </div>
@@ -85,11 +85,11 @@
     </div>
 
     <!-- Esta es tu ventana modal para Editar -->
-    <div class="modal fade BGTf" id="myModaledit">
+    <div class="modal fade BGVtnModalFade" id="myModaledit">
         <div class="modal-dialog">
-            <div class="modal-content BGTo">
+            <div class="modal-content BGVtnModalPrincipal">
                 <div class="modal-header">
-                    <h5 class="modal-title TXWc">Editando un Producto d</h5>
+                    <h5 class="modal-title TxtBlancoB">Editando un Producto d</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -103,18 +103,18 @@
 
                     <!-- Nombre-->
                     <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control BGTl TXWl" placeholder="Nombre del producto"
+                        <input type="text" class="form-control BGTextHolder TxtBlancoN" placeholder="Nombre del producto"
                             v-model="newProducto.Nombre">
                     </div>
 
                     <!-- Descripcion -->
                     <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control BGTl TXWl" placeholder="Descripcion del producto"
+                        <input type="text" class="form-control BGTextHolder TxtBlancoN" placeholder="Descripcion del producto"
                             v-model="newProducto.Descripcion">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" @click="UupdateProducto()">Guardar
+                    <button type="button" class="BotonP BotonConfirmacion TxtBlancoB" data-dismiss="modal" @click="UupdateProducto()">Guardar
                         datos</button>
                 </div>
             </div>
@@ -247,7 +247,8 @@ export default {
 </script>
   
 <style scoped>
-/* Aquí van los estilos CSS de tu componente */
+
+/*Estilos para la animacion del banner*/
 .BGAN:hover {
     transition: 5s background-color ease;
 }
@@ -263,7 +264,6 @@ export default {
 
 .blue-bg {
     background-color: hsla(209, 100%, 50%, 0.575);
-
 }
 
 .hiddenA-text {
@@ -272,7 +272,6 @@ export default {
     font-weight: bold;
     font-size: 10px;
     transition: color 2s ease, font-size 5s ease;
-    /* Transición suave de la opacidad */
 }
 
 .hiddenB-text {
@@ -280,7 +279,6 @@ export default {
     text-align: right;
     font-size: 100px;
     transition: color 2s ease, font-size 5s ease;
-    /* Transición suave de la opacidad */
 }
 
 .visible-text {
@@ -296,39 +294,90 @@ export default {
     padding-top: 0;
 }
 
-.TXWc {
+/*Estilos para el texto*/
+
+.TxtBlancoB {
     color: hsl(0, 0%, 100%);
     font-weight: bold;
     font-size: 12px;
 }
 
-.TXWl {
+.TxtBlancoN {
     color: hsl(0, 0%, 100%);
     font-size: 12px;
-}
-
-.TB {
-    Background-color: #363636;
-    color: hsl(0, 0%, 100%);
-    font-weight: bold;
-    font-size: 10px;
-    text-align: center;
-}
-
-.BGTf {
-    Background-color: #36363686;
-}
-
-.BGTo {
-    Background-color: #363636;
-}
-
-.BGTl {
-    Background-color: #464646;
 }
 
 input::placeholder {
     color: hsl(0, 0%, 100%);
     font-size: 12px;
-}</style>
+}
+
+/*Estilos para el color de fondo de la ventana modal*/
+.BGVtnModalFade {
+    Background-color: #36363686;
+}
+
+.BGVtnModalPrincipal {
+    Background-color: #3a3a3a;
+}
+
+.BGTextHolder {
+    Background-color: #464646;
+}
+
+/*Estilos para los Botones*/
+
+
+/*Boton Master-Class*/
+.BotonP{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;    
+    transition: background-color 0.6s ease;  
+    position: relative;
+    overflow: hidden;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/*Animacion del Boton*/
+.BotonP::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); 
+    transition: left 0.3s;     
+}
+
+.BotonP:hover::before {
+    left: 100%;
+}
+
+.BotonP:hover {
+    background-color: #666666; 
+}
+
+/*Fondos para los Botones*/
+
+.BotonAgregar{
+    background-color: rgb(0, 88, 100);
+}
+
+.BotonConfirmacion{
+background-color: rgb(0, 100, 0);
+}
+
+.BotonAviso{
+    background-color: rgb(255, 209, 58);    
+}
+
+
+.BotonEliminar{
+    background-color: rgb(255, 50, 50);
+}
+</style>
+
   
